@@ -1,0 +1,25 @@
+{
+  "name": "web-dev",
+  "version": "1.0.0",
+  "description": "Storage point for a learner's FrontEnd Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tnmae/Web-Dev-FE-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tnmae/Web-Dev-FE-/issues"
+  },
+  "homepage": "https://github.com/Tnmae/Web-Dev-FE-#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
