@@ -7,9 +7,15 @@ const app = express();
 
 app.use(express.json()); //alows us to accept JSON data in the body
 
-app.get('/', (req, res) => {
-	res.send('server is ready');
-})
+app.get('/api/products', async (req, res) => {
+	try {
+		const products = await Product.find({});
+		res.status(200).json({success: true, data: products});
+	}catch (error) {
+		console.log("Error in fetching products ", error.message);
+		res.status(500).json({success: false, message: "Server Error"});
+	}
+});
 
 app.post("/api/products", (req, res) => {
 	const product= req.body;
@@ -24,10 +30,24 @@ app.post("/api/products", (req, res) => {
 		newProduct.save();
 		return res.status(201).json({success: true, data: newProduct});
 	}catch (error) {
-		console.error("Error in creating product: ", error);
+		console.error("Error in creating product: ", error.message);
 		res.status(500).json({success: false, message: "server error"});
 	}
 });
+
+app.put("api/product/:id", async (req, res) => {
+	const { id } = req.params;
+
+	const product = req.body;
+
+	try {
+		const updateProduct= await Product.findByIdAndUpdate(id, product, {new : true});
+		res.status(200).json({success: true, data: updateProduct});
+	}catch (error) {
+		console.log("error updating product ", error.message);
+		res.status(500).json({success: false, message: "server error"});
+	}
+})
 
 app.delete("/api/products/:id", async (req, res) => {
 	const { id } = req.params;
@@ -36,6 +56,7 @@ app.delete("/api/products/:id", async (req, res) => {
 		await Product.findByIdAndDelete(id);
 		res.status(200).json({success: true, message: "Product deleted"});
 	} catch (error) {
+		console.log("error in deleting product ", error.message);
 		res.status(404).json({success: false, message: "Product id does not exist"});
 	}
 });
